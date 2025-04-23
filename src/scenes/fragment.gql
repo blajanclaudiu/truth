@@ -1,0 +1,80 @@
+fragment SectionDetails on Section {
+    ...SectionBasic
+    collections(
+        where: { isDeleted: { equals: false } }
+        orderBy: { createdAt: asc }
+    ) {
+        ...CollectionWithPreview
+        owner {
+            pictureUrl
+        }
+    }
+}
+
+fragment CollectionWithPreview on Collection {
+    ...CollectionBasic
+    items(
+        first: 5
+        where: { isDeleted: { equals: false } }
+        orderBy: { position: asc }
+    ) {
+        ...ItemPreview
+    }
+}
+
+fragment ItemPreview on Item {
+    id
+    imageUrl
+    title
+    author
+    type
+    isDeleted
+    position
+    createdAt
+}
+
+fragment ItemDetail on Item {
+    productUrl
+    provider
+    meta
+    comment
+    description
+}
+
+fragment SectionBasic on Section {
+    id
+    title: name
+    index
+    slug
+}
+
+fragment CollectionBasic on Collection {
+    id
+    slug
+    updatedAt
+    isDeleted
+    title: name
+    detail
+}
+
+fragment UserBasic on User {
+    id
+    slug
+    authUserId
+    firstname
+    pictureUrl
+    biography
+    label
+}
+
+fragment Social on User {
+    mail
+    linkedin
+    youtube
+    website
+    github
+}
+
+fragment InboxCountItem on Inbox {
+    count
+}

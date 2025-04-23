@@ -1,0 +1,30 @@
+query getSection($sectionId: String!) {
+    section(where: { id: $sectionId }) {
+        ...SectionDetails
+    }
+}
+
+mutation deleteSection($sectionId: String!) {
+    updateOneSection(data: { isDeleted: true }, where: { id: $sectionId }) {
+        id
+        slug
+        title: name
+    }
+}
+
+mutation updateSection($sectionId: String!, $title: String) {
+    updateOneSection(data: { name: $title }, where: { id: $sectionId }) {
+        id
+        slug
+        index
+        title: name
+    }
+}
+
+mutation CreateEmptyCollection($sectionId: ID!) {
+    collection: createEmptyCollection(sectionId: $sectionId) {
+        id
+        slug
+        name
+    }
+}

@@ -1,0 +1,61 @@
+# Explicit filtering on authUserId is not the best
+# Getting user info and only proper its sections should be done by default
+# Dont want to write custom resolver for that now and nexus prisma will support this
+# usecase https://github.com/prisma-labs/nexus-prisma/issues/501
+query getSections($authUserId: String!) {
+    user(where: { authUserId: $authUserId }) {
+        id
+        slug
+    }
+    inbox {
+        id
+        count
+    }
+    sections(
+        where: {
+            isDeleted: { equals: false }
+            owner: { authUserId: { equals: $authUserId } }
+        }
+    ) {
+        id
+        createdAt
+        isExpanded
+        title: name
+        collections(
+            where: { isDeleted: { equals: false } }
+            orderBy: { createdAt: asc }
+        ) {
+            id
+            slug
+            isDeleted
+            title: name
+        }
+    }
+}
+
+mutation createSection {
+    createEmptySection {
+        id
+        slug
+        createdAt
+        title: name
+        index
+        isExpanded
+        collections(where: { isDeleted: { equals: false } }) {
+            id
+            slug
+            isDeleted
+            title: name
+        }
+    }
+}
+
+mutation updateSectionExpanded($isExpanded: Boolean!, $sectionId: String!) {
+    updateOneSection(
+        where: { id: $sectionId }
+        data: { isExpanded: $isExpanded }
+    ) {
+        id
+        isExpanded
+    }
+}

@@ -1,0 +1,49 @@
+query getCollectionId($collectionId: String!) {
+    collection(where: { id: $collectionId }) {
+        ...CollectionBasic
+        createdAt
+    }
+}
+
+mutation deleteCollection($id: String!) {
+    updateOneCollection(data: { isDeleted: true }, where: { id: $id }) {
+        id
+        slug
+        isDeleted
+        section {
+            id
+        }
+    }
+}
+
+mutation unDeleteCollection($id: String!) {
+    updateOneCollection(data: { isDeleted: false }, where: { id: $id }) {
+        id
+        slug
+        isDeleted
+    }
+}
+
+mutation moveItemFromCollectionToCollection(
+    $itemId: String!
+    $collectionId: String!
+) {
+    updateOneItem(
+        data: { collection: { connect: { id: $collectionId } } }
+        where: { id: $itemId }
+    ) {
+        id
+    }
+}
+
+mutation moveItemFromCollectionToInbox($itemId: String!, $authUserId: String!) {
+    updateOneItem(
+        data: {
+            collection: { disconnect: true }
+            inboxOwner: { connect: { authUserId: $authUserId } }
+        }
+        where: { id: $itemId }
+    ) {
+        id
+    }
+}

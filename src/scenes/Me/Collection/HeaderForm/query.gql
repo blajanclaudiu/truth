@@ -1,0 +1,16 @@
+mutation UpdateCollection(
+    $collectionId: String!
+    $slug: String!
+    $name: String
+    $detail: String
+) {
+    collection: updateOneCollection(
+        where: { id: $collectionId }
+        data: { name: $name, detail: $detail, slug: $slug }
+    ) {
+        id
+        slug
+        name
+        detail
+    }
+}

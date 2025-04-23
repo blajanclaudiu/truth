@@ -1,0 +1,20 @@
+query getCollectionProfile($collectionId: String!) {
+    collection(where: { id: $collectionId }) {
+        ...CollectionBasic
+        createdAt
+        owner {
+            pictureUrl
+            firstname
+            slug
+        }
+        items {
+            ...ItemPreview
+            ...ItemDetail
+        }
+        section {
+            id
+            name
+            slug
+        }
+    }
+}

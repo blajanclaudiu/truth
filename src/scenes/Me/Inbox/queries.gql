@@ -1,0 +1,24 @@
+query getInbox {
+    inbox {
+        id
+        items {
+            ...ItemPreview
+            ...ItemDetail
+        }
+    }
+}
+
+mutation moveItemFromInboxToCollection(
+    $itemId: String!
+    $collectionId: String!
+) {
+    updateOneItem(
+        data: {
+            collection: { connect: { id: $collectionId } }
+            inboxOwner: { disconnect: true }
+        }
+        where: { id: $itemId }
+    ) {
+        id
+    }
+}

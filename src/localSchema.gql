@@ -1,0 +1,15 @@
+type Breadcrumb {
+    title: String!
+    href: String!
+    as: String!
+}
+
+type Modal {
+    isNavigationOpen: Boolean
+}
+
+extend type Query {
+    breadcrumbs: [Breadcrumb!]!
+    modal: Modal!
+    statusMessage: String
+}

@@ -1,0 +1,38 @@
+mutation deleteItem($id: String!) {
+    updateOneItem(data: { isDeleted: true }, where: { id: $id }) {
+        id
+        isDeleted
+    }
+}
+
+mutation saveCommentItem($id: String!, $comment: String!) {
+    updateOneItem(data: { comment: $comment }, where: { id: $id }) {
+        id
+        comment
+    }
+}
+
+mutation undeleteItem($id: String!) {
+    updateOneItem(data: { isDeleted: false }, where: { id: $id }) {
+        id
+        isDeleted
+    }
+}
+
+mutation changePosition($oldIndex: Int!, $newIndex: Int!, $collectionId: ID!) {
+    changeItemPosition(
+        oldIndex: $oldIndex
+        newIndex: $newIndex
+        collectionId: $collectionId
+    ) {
+        id
+        position
+    }
+}
+
+query getItems($collectionId: String) {
+    items(where: { collection: { id: { equals: $collectionId } } }) {
+        ...ItemPreview
+        ...ItemDetail
+    }
+}

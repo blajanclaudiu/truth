@@ -1,0 +1,15 @@
+mutation createNewUser(
+    $slug: String!
+    $authUserId: String!
+    $pictureUrl: String!
+    $firstname: String!
+) {
+    user: createNewUser(
+        slug: $slug
+        authUserId: $authUserId
+        pictureUrl: $pictureUrl
+        firstname: $firstname
+    ) {
+        ...UserBasic
+    }
+}

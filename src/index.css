@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Tooltip custom */
+.ant-tooltip-inner {
+    @apply bg-gray-600;
+    @apply py-1;
+}
+
+.ant-tooltip-arrow::before {
+    @apply bg-gray-600;
+}
+
+/* Autocomplete custom */
+.ant-select-dropdown-menu-item:hover:not(.ant-select-dropdown-menu-item-disabled) {
+    @apply bg-gray-200;
+}
+.ant-select-dropdown-menu-item-active:not(.ant-select-dropdown-menu-item-disabled) {
+    @apply bg-gray-200;
+}
+
+/* Dropdown custom  */
+.ant-dropdown-menu {
+    @apply p-1;
+}
+
+.ant-dropdown-menu-item {
+    @apply rounded-sm;
+}
+
+/* Transition */
+
+.fade-enter {
+    opacity: 0.1;
+}
+
+.fade-enter.fade-enter-active {
+    opacity: 1;
+    overflow: hidden;
+    transition: all 250ms ease-in-out;
+}
+
+.fade-exit {
+    opacity: 1;
+    overflow: hidden;
+}
+
+.fade-exit.fade-exit-active {
+    opacity: 0.1;
+    transition: all 250ms;
+}
